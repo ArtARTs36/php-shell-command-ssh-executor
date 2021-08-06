@@ -1,4 +1,4 @@
-## ShellCommandShhExecutor
+## ShellCommandSshExecutor
 
 The adapter for [ShellCommand](https://github.com/ArtARTs36/ShellCommand) executor through SSH
 
