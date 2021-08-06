@@ -1,6 +1,7 @@
 {
     "name": "artarts36/shell-command-ssh-executor",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "ArtARTs36",
