@@ -1,0 +1,27 @@
+{
+    "name": "artarts36/shell-command-ssh-executor",
+    "type": "library",
+    "authors": [
+        {
+            "name": "ArtARTs36",
+            "email": "temicska99@mail.ru"
+        }
+    ],
+    "require": {
+        "artarts36/shell-command": ">= 1.6.1",
+        "ext-ssh2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtARTs36\\ShellCommandSshExecutor\\": "src"
+        }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "scripts": {
+        "lint": [
+            "./vendor/bin/phpcs --standard=PSR2 src/"
+        ]
+    }
+}
