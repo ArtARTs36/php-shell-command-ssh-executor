@@ -35,7 +35,7 @@ class Connection
         static $system = null;
 
         if ($system === null) {
-            $system = new FileSystem($this->source, ssh2_sftp($this->source));
+            $system = new FileSystem($this, ssh2_sftp($this->source));
         }
 
         return $system;
