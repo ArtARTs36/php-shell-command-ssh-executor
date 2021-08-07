@@ -30,6 +30,11 @@ class Connection
         return ssh2_disconnect($this->connection);
     }
 
+    public function downloadFile(string $remotePath, string $localPath): bool
+    {
+        return ssh2_scp_recv($this->connection, $remotePath, $localPath);
+    }
+
     public function __destruct()
     {
         $this->close();
