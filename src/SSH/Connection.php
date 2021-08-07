@@ -6,16 +6,16 @@ class Connection
 {
     use ConnectionConstructors;
 
-    protected $connection;
+    protected $source;
 
-    public function __construct($connection)
+    public function __construct($source)
     {
-        $this->connection = $connection;
+        $this->source = $source;
     }
 
     public function executeCommand(string $command): ?string
     {
-        $stream = ssh2_exec($this->connection, $command);
+        $stream = ssh2_exec($this->source, $command);
         $stdout = $this->getContentFromStream($stream, SSH2_STREAM_STDIO);
 
         if ($stdout !== null) {
@@ -27,17 +27,31 @@ class Connection
 
     public function close(): bool
     {
-        return ssh2_disconnect($this->connection);
+        return ssh2_disconnect($this->source);
     }
 
-    public function downloadFile(string $remotePath, string $localPath): bool
+    public function getFileSystem(): FileSystem
     {
-        return ssh2_scp_recv($this->connection, $remotePath, $localPath);
+        static $system = null;
+
+        if ($system === null) {
+            $system = new FileSystem($this->source, ssh2_sftp($this->source));
+        }
+
+        return $system;
     }
 
     public function __destruct()
     {
         $this->close();
+    }
+
+    /**
+     * @return resource
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 
     protected function getContentFromStream($stream, int $id): ?string
