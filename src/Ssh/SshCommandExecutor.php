@@ -2,10 +2,11 @@
 
 namespace ArtARTs36\ShellCommand\Executors\Ssh;
 
+use ArtARTs36\ShellCommand\Interfaces\CommandBuilder;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
 use ArtARTs36\ShellCommand\Result\CommandResult;
-use ArtARTs36\ShellCommand\ShellCommand;
+use ArtARTs36\ShellCommand\ShellCommander;
 use ArtARTs36\Str\Str;
 
 class SshCommandExecutor implements ShellCommandExecutor
@@ -14,19 +15,23 @@ class SshCommandExecutor implements ShellCommandExecutor
 
     protected $closeConnectionAfterCommandExecute;
 
+    protected $builder;
+
     public function __construct(
         Connection $connection,
-        bool $closeConnectionAfterCommandExecute = true
+        bool $closeConnectionAfterCommandExecute = true,
+        ?CommandBuilder $builder = null
     ) {
         $this->connection = $connection;
         $this->closeConnectionAfterCommandExecute = $closeConnectionAfterCommandExecute;
+        $this->builder = $builder ?? new ShellCommander();
     }
 
     public function execute(ShellCommandInterface $command): CommandResult
     {
         $prepareCommand = clone $command;
         $prepareCommand->joinAnyway(
-            ShellCommand::make('echo')
+            $this->builder->make('echo')
                 ->addCutOption('en')
                 ->addArgument('"|exit-code:$?|"', false)
         );
