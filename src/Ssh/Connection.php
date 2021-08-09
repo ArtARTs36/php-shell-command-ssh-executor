@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtARTs36\ShellCommandSshExecutor\SSH;
+namespace ArtARTs36\ShellCommand\Executors\Ssh;
 
 class Connection
 {
@@ -13,16 +13,14 @@ class Connection
         $this->source = $source;
     }
 
-    public function executeCommand(string $command): ?string
+    public function executeCommand(string $command): array
     {
         $stream = ssh2_exec($this->source, $command);
-        $stdout = $this->getContentFromStream($stream, SSH2_STREAM_STDIO);
 
-        if ($stdout !== null) {
-            return $stdout;
-        }
-
-        return $this->getContentFromStream($stream, SSH2_STREAM_STDERR);
+        return [
+            $this->getContentFromStream($stream, SSH2_STREAM_STDIO),
+            $this->getContentFromStream($stream, SSH2_STREAM_STDERR),
+        ];
     }
 
     public function close(): bool

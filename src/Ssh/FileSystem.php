@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtARTs36\ShellCommandSshExecutor\SSH;
+namespace ArtARTs36\ShellCommand\Executors\Ssh;
 
 class FileSystem
 {
