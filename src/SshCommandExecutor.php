@@ -5,7 +5,9 @@ namespace ArtARTs36\ShellCommandSshExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
 use ArtARTs36\ShellCommand\Result\CommandResult;
+use ArtARTs36\ShellCommand\ShellCommand;
 use ArtARTs36\ShellCommandSshExecutor\SSH\Connection;
+use ArtARTs36\Str\Str;
 
 class SshCommandExecutor implements ShellCommandExecutor
 {
@@ -23,12 +25,34 @@ class SshCommandExecutor implements ShellCommandExecutor
 
     public function execute(ShellCommandInterface $command): CommandResult
     {
-        $result = $this->connection->executeCommand($command);
+        $prepareCommand = clone $command;
+        $prepareCommand->joinAnyway(
+            ShellCommand::make('echo')
+                ->addCutOption('en')
+                ->addArgument('"|exit-code:$?|"', false)
+        );
+
+        [$out, $err] = $this->connection->executeCommand($prepareCommand);
+
+        $result = Str::make(rtrim($out));
+
+        $code = $this->getCodeFromResult($result);
 
         if ($this->closeConnectionAfterCommandExecute) {
             $this->connection->close();
         }
 
-        return new CommandResult($command, $result, new \DateTime());
+        return new CommandResult($command, $result->deleteLastLine(), new \DateTime(), Str::make($err), $code);
+    }
+
+    protected function getCodeFromResult(Str $result): int
+    {
+        $code = $result->getLastLine()->match('#\|exit-code:(\d+)\|#');
+
+        if (! $code->isDigit()) {
+            throw new \RuntimeException('Process exit-code not found!');
+        }
+
+        return $code->toInteger();
     }
 }

@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "artarts36/shell-command": ">=1.6.2",
+        "artarts36/shell-command": "^2.0",
         "ext-ssh2": "*"
     },
     "autoload": {
