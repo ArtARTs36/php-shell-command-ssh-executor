@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtARTs36\ShellCommandSshExecutor;
+namespace ArtARTs36\ShellCommand\Executors;
 
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
