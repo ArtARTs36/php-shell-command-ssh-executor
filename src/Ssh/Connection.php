@@ -1,6 +1,6 @@
 <?php
 
-namespace ArtARTs36\ShellCommand\Executors\SSH;
+namespace ArtARTs36\ShellCommand\Executors\Ssh;
 
 class Connection
 {

@@ -1,8 +1,7 @@
 <?php
 
-namespace ArtARTs36\ShellCommand\Executors;
+namespace ArtARTs36\ShellCommand\Executors\Ssh;
 
-use ArtARTs36\ShellCommand\Executors\SSH\Connection;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
 use ArtARTs36\ShellCommand\Result\CommandResult;
