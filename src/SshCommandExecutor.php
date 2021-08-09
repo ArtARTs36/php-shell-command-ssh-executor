@@ -34,7 +34,7 @@ class SshCommandExecutor implements ShellCommandExecutor
 
         [$out, $err] = $this->connection->executeCommand($prepareCommand);
 
-        $result = Str::make(rtrim($out));
+        $result = Str::make($out)->trim();
 
         $code = $this->getCodeFromResult($result);
 
