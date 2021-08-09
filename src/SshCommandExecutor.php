@@ -2,11 +2,11 @@
 
 namespace ArtARTs36\ShellCommand\Executors;
 
+use ArtARTs36\ShellCommand\Executors\SSH\Connection;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandExecutor;
 use ArtARTs36\ShellCommand\Interfaces\ShellCommandInterface;
 use ArtARTs36\ShellCommand\Result\CommandResult;
 use ArtARTs36\ShellCommand\ShellCommand;
-use ArtARTs36\ShellCommandSshExecutor\SSH\Connection;
 use ArtARTs36\Str\Str;
 
 class SshCommandExecutor implements ShellCommandExecutor
