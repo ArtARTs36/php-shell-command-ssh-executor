@@ -140,4 +140,16 @@ class FileSystem implements \ArtARTs36\FileSystem\Contracts\FileSystem
             ->getResult()
             ->trim();
     }
+
+    public function getTmpDir(): string
+    {
+        return $this
+            ->builder
+            ->make()
+            ->addArgument('echo')
+            ->addArgument('${TMPDIR:-/tmp}', false)
+            ->executeOrFail($this->executor)
+            ->getResult()
+            ->trim();
+    }
 }
