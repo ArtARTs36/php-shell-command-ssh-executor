@@ -11,20 +11,32 @@ use ArtARTs36\Str\Str;
 
 class SshCommandExecutor implements ShellCommandExecutor
 {
-    protected $connection;
+    protected $connection = null;
 
     protected $closeConnectionAfterCommandExecute;
 
     protected $builder;
 
     public function __construct(
-        Connection $connection,
+        ?Connection $connection = null,
         bool $closeConnectionAfterCommandExecute = true,
         ?CommandBuilder $builder = null
     ) {
         $this->connection = $connection;
         $this->closeConnectionAfterCommandExecute = $closeConnectionAfterCommandExecute;
         $this->builder = $builder ?? new ShellCommander();
+    }
+
+    public function useConnection(Connection $connection): self
+    {
+        $this->connection = $connection;
+
+        return $this;
+    }
+
+    public function buildFileSystem(): FileSystem
+    {
+        return FileSystem::connect($this->connection, $this->builder, $this);
     }
 
     public function execute(ShellCommandInterface $command): CommandResult

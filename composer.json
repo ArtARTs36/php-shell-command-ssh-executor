@@ -10,7 +10,8 @@
     ],
     "require": {
         "artarts36/shell-command": "^2.1",
-        "ext-ssh2": "*"
+        "ext-ssh2": "*",
+        "artarts36/file-system-contracts": "^0.1.0"
     },
     "autoload": {
         "psr-4": {
