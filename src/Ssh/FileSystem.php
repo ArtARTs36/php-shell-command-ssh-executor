@@ -130,6 +130,8 @@ class FileSystem implements \ArtARTs36\FileSystem\Contracts\FileSystem
 
     public function getFileContent(string $path): string
     {
+        $this->getStat($path);
+
         return $this
             ->builder
             ->make('cat')
