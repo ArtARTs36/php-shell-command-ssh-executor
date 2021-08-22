@@ -28,17 +28,6 @@ class Connection
         return ssh2_disconnect($this->source);
     }
 
-    public function getFileSystem(): FileSystem
-    {
-        static $system = null;
-
-        if ($system === null) {
-            $system = new FileSystem($this, ssh2_sftp($this->source));
-        }
-
-        return $system;
-    }
-
     public function __destruct()
     {
         $this->close();
